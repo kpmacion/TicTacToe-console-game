@@ -22,6 +22,7 @@ class TicTacToe:
                     return
         else:
             print(f"Invalid number! ({number})")
+            raise ValueError
 
     def if_game_is_over(self):
         row_list = [i for i in self.game_field]
@@ -62,7 +63,11 @@ def main():
     while not game.if_game_is_over():
         game.show_game_field()
         print(f"It's '{options[(game.turn_counter + first_sign_index) % 2]}' turn!")
-        game.play(integer_input_validation("Choose number: "), options[(game.turn_counter + first_sign_index) % 2])
+        try:
+            game.play(integer_input_validation("Choose number: "), options[(game.turn_counter + first_sign_index) % 2])
+        except ValueError:
+            continue
+
         game.turn_counter += 1
         print("=" * 80)
     else:
